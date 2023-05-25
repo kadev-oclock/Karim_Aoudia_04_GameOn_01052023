@@ -16,41 +16,59 @@ formSubmit.addEventListener("submit", validate);
 function validate(event) {
   event.preventDefault(); // On empêche l'envoi du formulaire
 
-  const firstName = firstNameInput.value;
-  const lastName = lastNameInput.value;
-  const email = emailInput.value;
-  const birthdate = birthdateInput.value;
-  const quantity = quantityInput.value;
+  const firstName = firstNameInput.value.trim();
+  const lastName = lastNameInput.value.trim();
+  const email = emailInput.value.trim();
+  const birthdate = birthdateInput.value.trim();
+  const quantity = quantityInput.value.trim();
   let locationChecked = false;
   const checkbox1Checked = checkbox1Input.checked;
 
   // Validation du champ Prénom
-  if (firstName.trim().length < 2) {
-    alert("Veuillez entrer un prénom valide (au moins 2 caractères).");
+  if (firstName.length < 2) {
+    errorMessage(
+      firstNameError,
+      "Veuillez entrer un prénom valide (au moins 2 lettres)."
+    );
+    return false;
+  } else if (!firstName.match(/^[a-zA-Z]{2,}$/)) {
+    errorMessage(
+      firstNameError,
+      "Le prénom doit être composé uniquement de lettres."
+    );
     return false;
   }
 
   // Validation du champ Nom
-  if (lastName.trim().length < 2) {
-    alert("Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+  if (lastName.length < 2) {
+    errorMessage(
+      nameError,
+      "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+    );
+    return false;
+  } else if (!lastName.match(/^[a-zA-Z]{2,}$/)) {
+    errorMessage(nameError, "nom doit commencer par une lettre.");
     return false;
   }
 
   // Validation de l'adresse e-mail
   if (!isValidEmail(email)) {
-    alert("Veuillez entrer une adresse e-mail valide.");
+    errorMessage(emailError, "Veuillez entrer une adresse e-mail valide.");
     return false;
   }
 
   // Validation de la date de naissance
   if (!isValidDate(birthdate)) {
-    alert("Vous devez entrer votre date de naissance.");
+    errorMessage(birthdateError, "Vous devez entrer votre date de naissance.");
     return false;
   }
 
   // Validation du nombre de concours
   if (!isValidQuantity(quantity)) {
-    alert("Veuillez entrer un nombre valide pour le nombre de concours (entre 0 et 99).");
+    errorMessage(
+      quantityError,
+      "Veuillez entrer un nombre valide pour le nombre de concours (entre 0 et 99)."
+    );
     return false;
   }
 
@@ -63,24 +81,32 @@ function validate(event) {
   }
 
   if (!locationChecked) {
-    alert("Vous devez choisir une option.");
+    errorMessage(locationError,"Vous devez choisir une option.");
     return false;
   }
 
   // Validation de la case à cocher des conditions générales
   if (!checkbox1Checked) {
-    alert("Vous devez vérifier que vous acceptez les termes et conditions.");
+    errorMessage(
+      "Vous devez vérifier que vous acceptez les termes et conditions."
+    );
     return false;
   }
 
   // Après avoir effectué toutes les validations avec succès
   confirmationMessage.textContent = "Merci ! Votre réservation a été reçue.";
+  formSubmit.reset();
   return true;
+}
+
+//function message erreur
+function errorMessage(champ, message) {
+  champ.textContent = message;
 }
 
 // Fonction de validation de l'adresse e-mail
 function isValidEmail(email) {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailPattern = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
   return emailPattern.test(email);
 }
 
@@ -96,4 +122,7 @@ function isValidQuantity(quantity) {
   return quantityPattern.test(quantity);
 }
 
-
+function isValidUser(user) {
+  const userPattern = /^[a-zA-Z0-9_-]{3,20}$/;
+  return userPattern.test(user);
+}

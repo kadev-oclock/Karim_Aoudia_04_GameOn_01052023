@@ -17,7 +17,7 @@
   <body>
     <div class="topnav" id="myTopnav">
       <div class="header-logo">
-        <img alt="logo" src="Logo.png"/>
+        <img alt="logo" src="Logo.png" />
       </div>
       <div class="main-navbar">
         <a href="#" class="active"><span>Accueil</span></a>
@@ -68,6 +68,7 @@
                   name="first"
                   minlength="2"
                 /><br />
+                <div class="error" id="firstNameError"></div>
               </div>
               <div class="formData">
                 <label for="last">Nom</label><br />
@@ -78,6 +79,7 @@
                   name="last"
                   minlength="2"
                 /><br />
+                <div class="error" id="nameError"></div>
               </div>
               <div class="formData">
                 <label for="email">E-mail</label><br />
@@ -87,6 +89,7 @@
                   id="email"
                   name="email"
                 /><br />
+                <div class="error" id="emailError"></div>
               </div>
               <div class="formData">
                 <label for="birthdate">Date de naissance</label><br />
@@ -96,6 +99,7 @@
                   id="birthdate"
                   name="birthdate"
                 /><br />
+                <div class="error" id="birthdateError"></div>
               </div>
               <div class="formData">
                 <label for="quantity"
@@ -110,12 +114,13 @@
                   min="0"
                   max="99"
                 />
+                <div class="error" id="quantityError"></div>
               </div>
               <p class="text-label">
                 A quel tournoi souhaitez-vous participer cette année ?
               </p>
               <div class="formData">
-                <input 
+                <input
                   class="checkbox-input"
                   type="radio"
                   id="location1"
@@ -177,12 +182,12 @@
                   name="location"
                   value="Portland"
                 />
-                <label  class="checkbox-label" for="location6">
+                <label class="checkbox-label" for="location6">
                   <span class="checkbox-icon"></span>
                   Portland</label
                 >
+                <div class="error" id="locationError"></div>
               </div>
-
               <div class="formData">
                 <input
                   class="checkbox-input"
@@ -205,7 +210,7 @@
               <div class="formData">
                 <input class="btn-submit" type="submit" value="C'est parti" />
               </div>
-              <div id="confirmationMessage"></div>              
+              <div class="confirm" id="confirmationMessage"></div>
             </form>
           </div>
         </div>
