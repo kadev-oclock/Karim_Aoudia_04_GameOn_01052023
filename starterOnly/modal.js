@@ -21,8 +21,9 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close modal on click
+// close modal on click icon
 modalClose.addEventListener("click", closeModal);
+
 
 //function close modal
 function closeModal() {
