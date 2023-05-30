@@ -11,7 +11,9 @@ const checkbox1Input = document.querySelector("#checkbox1");
 const confirmationMessage = document.querySelector("#confirmationMessage");
 const formContainer = document.querySelector(".content");
 const validInput = document.querySelectorAll(".text-control");
-console.log(validInput);
+const modalBody = document.querySelector(".modal-body");
+const validModal = document.querySelectorAll("succes-form");
+
 // Event listener pour la soumission du formulaire
 formSubmit.addEventListener("submit", validate);
 
@@ -93,33 +95,37 @@ function validate(event) {
     return false;
   }
 
+  
+  // Code pour fermer le formulaire ici
+  // document.querySelector(".btn-submit").value = "Fermer";
+  
+  // Changer la valeur du bouton une fois le formulaire validé
+  document.querySelector(".btn-submit").addEventListener("click", overlay());
+  
   // Après avoir effectué toutes les validations avec succès
   confirmationMessage.textContent = "Merci ! Votre réservation a été reçue.";
-  formSubmit.reset();
-  // Code pour fermer le formulaire ici
-  document.querySelector(".btn-submit").value = "Fermer";
 
-  // Changer la valeur du bouton une fois le formulaire validé
-  document.querySelector(".btn-submit").addEventListener("click", function () {
-    btnClose.style.display = "none";
-  });
-  return false;
+ return true;
 }
+
+
+
 
 //function message erreur
 function errorMessage(champ, message, isValid) {
   if (!isValid) {
     champ.textContent = message;
   } else {
-    champ.textContent = "";
+    champ.reset();
   }
   validInput.forEach(function (input) {
     if (!isValid) {
       input.classList.toggle("errors");
     } else {
-      input.classList.toggle("");
+      input.style.display = "none";
     }
   });
+  
 }
 
 // Fonction de validation de l'adresse e-mail
@@ -130,7 +136,7 @@ function isValidEmail(email) {
 
 // Fonction de validation de la date de naissance
 function isValidDate(date) {
-  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  const datePattern = /(200[0-4]|19[2-9]\d)\-(1[0-2]|0[1-9])\-(3[0-1]|[0-2]\d)/;
   return datePattern.test(date);
 }
 
@@ -138,4 +144,19 @@ function isValidDate(date) {
 function isValidQuantity(quantity) {
   const quantityPattern = /^\d{1,2}$/;
   return quantityPattern.test(quantity);
+}
+
+
+//fonction overlay quand le form est soumis
+function overlay() {
+const getClassName = modalBody.className;
+if (getClassName === "modal-body") {
+  modalBody.classList.add("hidden");
+  validModal.classList.remove("hidden");
+  formSubmit.reset();
+
+} else {
+  modalBody.classList.remove("hidden");
+  validModal.classList.add("hidden");
+}
 }
