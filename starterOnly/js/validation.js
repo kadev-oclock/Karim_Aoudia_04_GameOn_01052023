@@ -116,15 +116,13 @@ function validate(event) {
   }
 
   // Code pour fermer le formulaire ici
-  // document.querySelector(".btn-submit").value = "Fermer";
 
-  // Changer la valeur du bouton une fois le formulaire validé
-  document.querySelector(".btn-submit").addEventListener("click", overlay());
+  if(isValid === true) {
+    overlay();
+   }else {
+ return false
+ }
 
-  // Après avoir effectué toutes les validations avec succès
-  confirmationMessage.textContent = "Merci ! Votre réservation a été reçue.";
-
-  return true;
 }
 
 //function message erreur
@@ -161,16 +159,10 @@ function isValidQuantity(quantity) {
   return quantityPattern.test(quantity);
 }
 
-//fonction overlay quand le form est soumis
+
+
 function overlay() {
   // Fermer le formulaire
- 
-  document.querySelector(".modal-body").classList.add("hidden-form");
-  document.querySelector(".modal-body").classList.remove("hidden-form");
-  document.querySelector(".modal-body").classList.remove("succes-form");
-  document.querySelector(".modal-body").classList.add("succes-form");
-
+document.querySelector(".confirm").classList.remove("hidden-form");
+document.querySelector(".confirm").classList.add("succes-form");
 }
-
-
-

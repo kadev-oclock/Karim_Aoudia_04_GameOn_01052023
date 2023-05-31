@@ -179,6 +179,19 @@ main {
   cursor: pointer;
   font-size: 16px;
 }
+.btn-close {
+  background: #fe142f;
+  margin-top: 0.5em;
+  padding: 1em;
+  color: #fff;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-close:hover {
+  background: #3876ac;
+}
 
 .button:hover {
   background: #3876ac;

@@ -54,6 +54,7 @@
           <span class="close"></span>
           <div class="modal-body">
             <form
+              class="hidden-form"
               name="reserve"
               action="index.html"
               method="get"
@@ -211,12 +212,19 @@
               <div class="formData">
                 <input class="btn-submit" type="submit" value="C'est parti" />
               </div>
-              <div class="succes-form hidden-form">
-                <div class="confirm" id="confirmationMessage">
-                </div>
-                <input class="btn-submit" type="submit" value="fermer" onclick="overlay();"/>
+              <div class="succes-form">
+                <input
+                  class="btn-submit"
+                  type="submit"
+                  value="fermer"
+                  onclick="overlay();"
+                />
               </div>
             </form>
+            <div class="confirm" type="text" id="confirmationMessage">
+              <p>Merci ! Votre réservation a été reçue</p>
+              <button class="btn-close" type="button">fermer</button>
+            </div>
           </div>
         </div>
       </div>
