@@ -12,7 +12,7 @@ const confirmationMessage = document.querySelector("#confirmationMessage");
 const formContainer = document.querySelector(".content");
 const validInput = document.querySelectorAll(".text-control");
 const modalBody = document.querySelector(".modal-body");
-const validModal = document.querySelectorAll("succes-form");
+
 
 // Event listener pour la soumission du formulaire
 formSubmit.addEventListener("submit", validate);
@@ -28,6 +28,7 @@ function validate(event) {
   const quantity = quantityInput.value.trim();
   let locationChecked = false;
   const checkbox1Checked = checkbox1Input.checked;
+  let isValid = true;
 
   // Validation du champ Prénom
   let firstNameValid = true;
@@ -117,11 +118,12 @@ function validate(event) {
 
   // Code pour fermer le formulaire ici
 
-  if(isValid === true) {
+  if (isValid === true) {
     overlay();
-   }else {
- return false
- }
+  } else {
+    isValid === false;
+    return false;
+  }
 
 }
 
