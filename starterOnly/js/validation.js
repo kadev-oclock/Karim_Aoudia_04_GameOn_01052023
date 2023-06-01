@@ -27,9 +27,8 @@ function validate(event) {
   const email = emailInput.value.trim();
   const birthdate = birthdateInput.value.trim();
   const quantity = quantityInput.value.trim();
-  let locationChecked = false;
+   const locationChecked = false;
   const checkbox1Checked = checkbox1Input.checked;
-  let isValid = true;
 
   // Validation du champ Prénom
   let firstNameValid = true;
@@ -40,7 +39,7 @@ function validate(event) {
     firstNameValid = false;
   }
 
-  if (firstNameValid == false) {
+  if (!firstNameValid) {
     errorMessage(
       firstNameError,
       "le prénom doit comporter au moins 2 lettres et pas de caratère spéciaux.",
@@ -59,7 +58,7 @@ function validate(event) {
     lastNameValid = false;
   }
 
-  if (lastNameValid == false) {
+  if (!lastNameValid) {
     errorMessage(
       nameError,
       "le nom doit comporter au moins 2 lettres et pas de caractère spéciaux.",
@@ -68,77 +67,79 @@ function validate(event) {
   } else {
     errorMessage(nameError, "");
   }
-
   // Validation de l'adresse e-mail
-  if (!isValidEmail(email)) {
-    errorMessage(emailError, "Veuillez entrer une adresse e-mail valide.");
+ let emailValid = isValidEmail(email);
+  if (!emailValid) {
+    errorMessage(emailError, "Veuillez entrer une adresse e-mail valide.","email");
   } else {
     errorMessage(emailError, "");
   }
-
+let birthdateValid  = isValidDate(birthdate);
   // Validation de la date de naissance
-  if (!isValidDate(birthdate)) {
-    errorMessage(birthdateError, "Vous devez entrer votre date de naissance.");
+  if (!birthdateValid) {
+    errorMessage(
+      birthdateError,
+      "Vous devez entrer votre date de naissance.",
+      "birthdate"
+    );
   } else {
-    errorMessage(birthdateError, "");
+    errorMessage(birthdateError, "", "birthdate");
   }
-
   // Validation du nombre de concours
-  if (!isValidQuantity(quantity)) {
+  let quantityValid  = isValidQuantity(quantity);
+  if (!quantityValid) {
     errorMessage(
       quantityError,
-      "Veuillez entrer un nombre valide pour le nombre de concours (entre 0 et 99)."
+      "Veuillez entrer un nombre valide pour le nombre de concours (entre 0 et 99).","quantity"
     );
   } else {
-    errorMessage(quantityError, "");
+    errorMessage(quantityError, "","quantity");
   }
 
-  // Validation du choix de l'emplacement
-  for (let i = 0; i < locationInputs.length; i++) {
-    if (locationInputs[i].checked) {
-      locationChecked = true;
-      break;
+    // Validation du choix de l'emplacement
+    for (let i = 0; i < locationInputs.length; i++) {
+      if (locationInputs[i].checked) {
+        locationChecked = true;
+        break;
+      }
     }
-  }
-
-  if (!locationChecked) {
-    errorMessage(locationError, "Vous devez choisir une option.");
-  } else {
-    errorMessage(locationError, "");
-  }
-
-  // Validation de la case à cocher des conditions générales
-  if (!checkbox1Checked) {
-    errorMessage(
-      checkboxError,
-      "Vous devez vérifier que vous acceptez les termes et conditions."
-    );
-  } else {
-    errorMessage(checkboxError, "");
-  }
+  
+    if (!locationChecked) {
+      errorMessage(locationError, "Vous devez choisir une option.");
+    } else {
+      errorMessage(locationError, "");
+    }
+  
+    // Validation de la case à cocher des conditions générales
+    if (!checkbox1Checked) {
+      errorMessage(
+        checkboxError,
+        "Vous devez vérifier que vous acceptez les termes et conditions."
+      );
+    } else {
+      errorMessage(checkboxError, "");
+    }
 
   // Code pour fermer le formulaire ici
-
+  isValid = firstNameValid && lastNameValid && emailValid && quantityValid && locationChecked && checkbox1Checked;
   if (isValid) {
     overlay();
     formSubmit.reset();
-  };
+  }
 }
 
 //function message erreur
 function errorMessage(champ, message, champInput) {
   champ.textContent = message;
-
-  if (champInput) {
-    let toto = document.querySelector("#" + champInput);
-    console.log(toto);
-
-    if (message.length > 0) {
-      toto.classList.add("errors");
-    } else {
-      toto.classList.remove("errors");
-    }
+  console.log(champInput);
+  let toto = document.querySelector("#" + champInput);
+  if(champInput){
+  if (message.length > 0) {
+    toto.classList.add("errors");
+  } else {
+    toto.classList.remove("errors");
   }
+}
 }
 
 // Fonction de validation de l'adresse e-mail
