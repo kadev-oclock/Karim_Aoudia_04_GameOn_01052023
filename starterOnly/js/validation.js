@@ -67,13 +67,17 @@ function validate(event) {
     errorMessage(nameError, "");
   }
   // Validation de l'adresse e-mail
- let emailValid = isValidEmail(email);
+  let emailValid = isValidEmail(email);
   if (!emailValid) {
-    errorMessage(emailError, "Veuillez entrer une adresse e-mail valide.","email");
+    errorMessage(
+      emailError,
+      "Veuillez entrer une adresse e-mail valide.",
+      "email"
+    );
   } else {
     errorMessage(emailError, "");
   }
-let birthdateValid  = isValidDate(birthdate);
+  let birthdateValid = isValidDate(birthdate);
   // Validation de la date de naissance
   if (!birthdateValid) {
     errorMessage(
@@ -85,42 +89,49 @@ let birthdateValid  = isValidDate(birthdate);
     errorMessage(birthdateError, "", "birthdate");
   }
   // Validation du nombre de concours
-  let quantityValid  = isValidQuantity(quantity);
+  let quantityValid = isValidQuantity(quantity);
   if (!quantityValid) {
     errorMessage(
       quantityError,
-      "Veuillez entrer un nombre valide pour le nombre de concours (entre 0 et 99).","quantity"
+      "Veuillez entrer un nombre valide pour le nombre de concours (entre 0 et 99).",
+      "quantity"
     );
   } else {
-    errorMessage(quantityError, "","quantity");
+    errorMessage(quantityError, "", "quantity");
   }
 
-    // Validation du choix de l'emplacement
-    for (let i = 0; i < locationInputs.length; i++) {
-      if (locationInputs[i].checked) {
-        locationChecked = true;
-        break;
-      }
+  // Validation du choix de l'emplacement
+  for (let i = 0; i < locationInputs.length; i++) {
+    if (locationInputs[i].checked) {
+      locationChecked = true;
+      break;
     }
-  
-    if (!locationChecked) {
-      errorMessage(locationError, "Vous devez choisir une option.");
-    } else {
-      errorMessage(locationError, "");
-    }
-  
-    // Validation de la case à cocher des conditions générales
-    if (!checkbox1Checked) {
-      errorMessage(
-        checkboxError,
-        "Vous devez vérifier que vous acceptez les termes et conditions."
-      );
-    } else {
-      errorMessage(checkboxError, "");
-    }
+  }
+
+  if (!locationChecked) {
+    errorMessage(locationError, "Vous devez choisir une option.");
+  } else {
+    errorMessage(locationError, "");
+  }
+
+  // Validation de la case à cocher des conditions générales
+  if (!checkbox1Checked) {
+    errorMessage(
+      checkboxError,
+      "Vous devez vérifier que vous acceptez les termes et conditions."
+    );
+  } else {
+    errorMessage(checkboxError, "");
+  }
 
   // Code pour fermer le formulaire ici
-  isValid = firstNameValid && lastNameValid && emailValid && quantityValid && locationChecked && checkbox1Checked;
+  isValid =
+    firstNameValid &&
+    lastNameValid &&
+    emailValid &&
+    quantityValid &&
+    locationChecked &&
+    checkbox1Checked;
   if (isValid) {
     overlay();
     formSubmit.reset();
@@ -132,13 +143,13 @@ function errorMessage(champ, message, champInput) {
   champ.textContent = message;
   console.log(champInput);
   let champError = document.querySelector("#" + champInput);
-  if(champInput){
-  if (message.length > 0) {
-    champError.classList.add("errors");
-  } else {
-    champError.classList.remove("errors");
+  if (champInput) {
+    if (message.length > 0) {
+      champError.classList.add("errors");
+    } else {
+      champError.classList.remove("errors");
+    }
   }
-}
 }
 
 // Fonction de validation de l'adresse e-mail

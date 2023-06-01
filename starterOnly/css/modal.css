@@ -73,7 +73,7 @@ img {
   font-size: 16px;
 }
 
-.confirm{
+.confirm {
   margin-top: 5px;
   color: white;
   font-size: 16px;
@@ -140,8 +140,8 @@ main {
 .modal-btn:hover {
   background: #3876ac;
 }
-.errors{
- border: solid 2px red;
+.errors {
+  border: solid 2px red;
 }
 
 .success {
@@ -152,9 +152,7 @@ main {
   padding: 10px;
   font-family: var(--font-slab);
 }
-.fa {
-  width: 25px;
-}
+
 /* Modal form */
 .success-form {
   height: 700px;
