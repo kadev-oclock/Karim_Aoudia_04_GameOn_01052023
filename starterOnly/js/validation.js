@@ -12,7 +12,8 @@ const confirmationMessage = document.querySelector("#confirmationMessage");
 const formContainer = document.querySelector(".content");
 const validInput = document.querySelectorAll(".text-control");
 const modalBody = document.querySelector(".modal-body");
-
+const hiddenForm = document.querySelector(".btn-close");
+const successModal = document.querySelector(".success-form");
 
 // Event listener pour la soumission du formulaire
 formSubmit.addEventListener("submit", validate);
@@ -118,13 +119,10 @@ function validate(event) {
 
   // Code pour fermer le formulaire ici
 
-  if (isValid === true) {
+  if (isValid) {
     overlay();
-  } else {
-    isValid === false;
-    return false;
-  }
-
+    formSubmit.reset();
+  };
 }
 
 //function message erreur
@@ -161,10 +159,21 @@ function isValidQuantity(quantity) {
   return quantityPattern.test(quantity);
 }
 
-
-
+// fonction message remerciement
 function overlay() {
-  // Fermer le formulaire
-document.querySelector(".confirm").classList.remove("hidden-form");
-document.querySelector(".confirm").classList.add("succes-form");
+  const modalBodyClasses = modalBody.classList;
+  if (modalBodyClasses.contains("modal-body")) {
+    modalBodyClasses.add("hidden-form");
+    successModal.classList.remove("hidden-form");
+  } else {
+    modalBodyClasses.remove("hidden-form");
+    successModal.classList.add("hidden-form");
+  }
 }
+
+function close() {
+  btnClose.style.display = "none";
+}
+
+// close modal on click icon
+hiddenForm.addEventListener("click", close);

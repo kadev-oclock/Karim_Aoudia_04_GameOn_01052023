@@ -1,13 +1,14 @@
+// responsive navigation menu
 function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
+  if (burgerNav.className === "topnav") {
+    burgerNav.className += " responsive";
   } else {
-    x.className = "topnav";
+    burgerNav.className = "topnav";
   }
 }
 
 // DOM Elements
+const burgerNav = document.getElementById("myTopnav");
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const modalClose = document.querySelector(".close");
