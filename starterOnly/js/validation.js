@@ -1,5 +1,5 @@
 // DOM Elements
-const btnClose = document.querySelector(".bground");
+
 const formSubmit = document.querySelector("form");
 const firstNameInput = document.querySelector("#first");
 const lastNameInput = document.querySelector("#last");
@@ -12,7 +12,6 @@ const confirmationMessage = document.querySelector("#confirmationMessage");
 const formContainer = document.querySelector(".content");
 const validInput = document.querySelectorAll(".text-control");
 const modalBody = document.querySelector(".modal-body");
-const hiddenForm = document.querySelector(".btn-close");
 const successModal = document.querySelector(".success-form");
 
 // Event listener pour la soumission du formulaire
@@ -27,8 +26,8 @@ function validate(event) {
   const email = emailInput.value.trim();
   const birthdate = birthdateInput.value.trim();
   const quantity = quantityInput.value.trim();
-   const locationChecked = false;
-  const checkbox1Checked = checkbox1Input.checked;
+  let locationChecked = false;
+  let checkbox1Checked = checkbox1Input.checked;
 
   // Validation du champ Prénom
   let firstNameValid = true;
@@ -132,12 +131,12 @@ let birthdateValid  = isValidDate(birthdate);
 function errorMessage(champ, message, champInput) {
   champ.textContent = message;
   console.log(champInput);
-  let toto = document.querySelector("#" + champInput);
+  let champError = document.querySelector("#" + champInput);
   if(champInput){
   if (message.length > 0) {
-    toto.classList.add("errors");
+    champError.classList.add("errors");
   } else {
-    toto.classList.remove("errors");
+    champError.classList.remove("errors");
   }
 }
 }
@@ -171,10 +170,3 @@ function overlay() {
     successModal.classList.add("hidden-form");
   }
 }
-
-function close() {
-  btnClose.style.display = "none";
-}
-
-// close modal on click icon
-hiddenForm.addEventListener("click", close);

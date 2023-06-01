@@ -13,6 +13,8 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const modalClose = document.querySelector(".close");
 const formData = document.querySelectorAll(".formData");
+const btnClose = document.querySelector(".bground");
+const hiddenForm = document.querySelector(".btn-close");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -30,4 +32,11 @@ modalClose.addEventListener("click", closeModal);
 function closeModal() {
   modalbg.style.display = "none";
 }
+
+//fonction fermer la modal  après soumission du formulaire
+function closeConfirmationModal() {
+  btnClose.style.display = "none";
+}
+hiddenForm.addEventListener("click", closeConfirmationModal);
+
 
