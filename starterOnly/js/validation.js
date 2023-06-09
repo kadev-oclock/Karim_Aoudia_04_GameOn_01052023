@@ -14,17 +14,16 @@ const validInput = document.querySelectorAll(".text-control");
 const modalBody = document.querySelector(".modal-body");
 const successModal = document.querySelector(".success-form");
 
-// Event listener pour la soumission du formulaire
-formSubmit.addEventListener("submit", validate);
 
-// Fonction de validation et On empêche l'envoi du formulaire
+
+// Fonction de validation / empêche l'envoi du formulaire
 function validate(event) {
   event.preventDefault();
 
   const firstName = firstNameInput.value.trim();
   const lastName = lastNameInput.value.trim();
   const email = emailInput.value.trim();
-  const birthdate = birthdateInput.value.trim();
+  const birthdate = birthdateInput.value;
   const quantity = quantityInput.value.trim();
   let locationChecked = false;
   let checkbox1Checked = checkbox1Input.checked;
@@ -45,7 +44,7 @@ function validate(event) {
       "first"
     );
   } else {
-    errorMessage(firstNameError, "");
+    errorMessage(firstNameError, "", "first");
   }
 
   // Validation du champ Nom
@@ -64,7 +63,7 @@ function validate(event) {
       "last"
     );
   } else {
-    errorMessage(nameError, "");
+    errorMessage(nameError, "", "last");
   }
   // Validation de l'adresse e-mail
   let emailValid = isValidEmail(email);
@@ -75,19 +74,21 @@ function validate(event) {
       "email"
     );
   } else {
-    errorMessage(emailError, "");
+    errorMessage(emailError, "", "email");
   }
-  let birthdateValid = isValidDate(birthdate);
+
   // Validation de la date de naissance
-  if (!birthdateValid) {
+  let birthdateValid = isValidDate(birthdate);
+  if (birthdateValid == "") {
     errorMessage(
       birthdateError,
-      "Vous devez entrer votre date de naissance.",
+      "Vous devez entrer votre date de naissance et avoir au moins 13ans.",
       "birthdate"
     );
   } else {
     errorMessage(birthdateError, "", "birthdate");
   }
+
   // Validation du nombre de concours
   let quantityValid = isValidQuantity(quantity);
   if (!quantityValid) {
@@ -124,24 +125,27 @@ function validate(event) {
     errorMessage(checkboxError, "");
   }
 
-  // Code pour fermer le formulaire ici
+  // validation formulaire
   isValid =
     firstNameValid &&
     lastNameValid &&
     emailValid &&
+    birthdateValid &&
     quantityValid &&
     locationChecked &&
     checkbox1Checked;
   if (isValid) {
     overlay();
     formSubmit.reset();
+    return true;
+  } else if (!isValid) {
+    return false;
   }
 }
 
 //function message erreur
 function errorMessage(champ, message, champInput) {
   champ.textContent = message;
-  console.log(champInput);
   let champError = document.querySelector("#" + champInput);
   if (champInput) {
     if (message.length > 0) {
@@ -160,8 +164,19 @@ function isValidEmail(email) {
 
 // Fonction de validation de la date de naissance
 function isValidDate(date) {
-  const datePattern = /(200[0-4]|19[2-9]\d)\-(1[0-2]|0[1-9])\-(3[0-1]|[0-2]\d)/;
-  return datePattern.test(date);
+  let dateInput = new Date(date.replace(/-/g, "/"));
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  const currentDate = new Date();
+  const pastDate = new Date(
+    currentDate.getFullYear() - 13,
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
+  if (datePattern.test(date) && dateInput <= pastDate) {
+    return dateInput;
+  } else {
+    return "";
+  }
 }
 
 // Fonction de validation du nombre de concours
