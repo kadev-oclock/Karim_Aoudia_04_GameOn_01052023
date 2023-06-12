@@ -22,11 +22,12 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+  modalBody.classList.remove("hidden-form");
+  successModal.classList.add("hidden-form");
 }
 
 // close modal on click icon
 modalClose.addEventListener("click", closeModal);
-
 
 //function close modal
 function closeModal() {
@@ -38,5 +39,3 @@ function closeConfirmationModal() {
   btnClose.style.display = "none";
 }
 hiddenForm.addEventListener("click", closeConfirmationModal);
-
-

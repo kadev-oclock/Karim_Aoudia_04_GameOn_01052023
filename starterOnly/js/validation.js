@@ -14,8 +14,6 @@ const validInput = document.querySelectorAll(".text-control");
 const modalBody = document.querySelector(".modal-body");
 const successModal = document.querySelector(".success-form");
 
-
-
 // Fonction de validation / empêche l'envoi du formulaire
 function validate(event) {
   event.preventDefault();
@@ -28,7 +26,11 @@ function validate(event) {
   let locationChecked = false;
   let checkbox1Checked = checkbox1Input.checked;
 
-  // Validation du champ Prénom
+  /* This code is validating the input in the first name field of a form. It first sets the
+`firstNameValid` variable to `true`. Then, it checks if the length of the input is less than 2
+characters or if it contains any non-alphabetic characters using a regular expression. If either of
+these conditions is true, `firstNameValid` is set to `false`. */
+
   let firstNameValid = true;
 
   if (firstName.length < 2) {
@@ -47,7 +49,14 @@ function validate(event) {
     errorMessage(firstNameError, "", "first");
   }
 
-  // Validation du champ Nom
+  /* This code is validating the input in the last name field of a form. It first sets the
+`lastNameValid` variable to `true`. Then, it checks if the length of the input is less than 2
+characters or if it contains any non-alphabetic characters using a regular expression. If either of
+these conditions is true, `lastNameValid` is set to `false`. If `lastNameValid` is false, the
+`errorMessage` function is called to display an error message in the `nameError` element. If
+`lastNameValid` is true, the `errorMessage` function is called to clear any error message in the
+`nameError` element. */
+
   let lastNameValid = true;
 
   if (lastName.length < 2) {
@@ -77,7 +86,14 @@ function validate(event) {
     errorMessage(emailError, "", "email");
   }
 
-  // Validation de la date de naissance
+  /* This code is validating the birthdate input field. It calls the `isValidDate` function to check if
+the input date is valid and returns a `Date` object representing the input date if it is valid,
+otherwise it returns an empty string. If the input date is not valid, the `errorMessage` function is
+called to display an error message in the `birthdateError` element. If the input date is valid, the
+`errorMessage` function is called to clear any error message in the `birthdateError` element. The
+error message displayed in the `birthdateError` element reminds the user that they must enter their
+birthdate and be at least 13 years old. */
+
   let birthdateValid = isValidDate(birthdate);
   if (birthdateValid == "") {
     errorMessage(
@@ -101,7 +117,12 @@ function validate(event) {
     errorMessage(quantityError, "", "quantity");
   }
 
-  // Validation du choix de l'emplacement
+  /* This code is checking if at least one of the location input fields (radio buttons) has been checked.
+  It does this by looping through all the location input fields and checking if the `checked` property
+  is true for any of them. If it finds a checked input field, it sets the `locationChecked` variable
+  to true and breaks out of the loop. If none of the input fields are checked, it sets
+`locationChecked` to false. */
+
   for (let i = 0; i < locationInputs.length; i++) {
     if (locationInputs[i].checked) {
       locationChecked = true;
@@ -135,7 +156,9 @@ function validate(event) {
     locationChecked &&
     checkbox1Checked;
   if (isValid) {
-    overlay();
+    // overlay();
+    modalBody.classList.add("hidden-form");
+    successModal.classList.remove("hidden-form");
     formSubmit.reset();
     return true;
   } else if (!isValid) {
@@ -143,7 +166,15 @@ function validate(event) {
   }
 }
 
-//function message erreur
+/**
+ * The function sets an error message for a given field and adds or removes a CSS class based on
+ * whether the message is empty or not.
+ * @param champ - This parameter is likely referring to a DOM element that displays an error message
+ * related to a form field.
+ * @param message - The error message that will be displayed in the specified champ element.
+ * @param champInput - champInput is a string that represents the ID of the HTML element that
+ * corresponds to the input field where the error message should be displayed.
+ */
 function errorMessage(champ, message, champInput) {
   champ.textContent = message;
   let champError = document.querySelector("#" + champInput);
@@ -156,13 +187,27 @@ function errorMessage(champ, message, champInput) {
   }
 }
 
-// Fonction de validation de l'adresse e-mail
+/**
+ * The function checks if a given email address is valid according to a specific pattern.
+ * @param email - The email parameter is a string representing an email address that needs to be
+ * validated.
+ * @returns a boolean value indicating whether the input email string matches the specified email
+ * pattern. If the email string matches the pattern, the function will return true, otherwise it will
+ * return false.
+ */
 function isValidEmail(email) {
   const emailPattern = /^[a-zA-Z0-9.\-_]+@[a-zA-Z0-9.\-_]+\.[a-z]{2,10}$/g;
   return emailPattern.test(email);
 }
 
-// Fonction de validation de la date de naissance
+/**
+ * The function checks if a given date is valid and returns it if it is, otherwise it returns an empty
+ * string.
+ * @param date - The `date` parameter is a string representing a date in the format "YYYY-MM-DD".
+ * @returns If the input `date` matches the pattern `yyyy-mm-dd` and is at least 13 years ago from the
+ * current date, then the function returns a `Date` object representing the input date. Otherwise, an
+ * empty string is returned.
+ */
 function isValidDate(date) {
   let dateInput = new Date(date.replace(/-/g, "/"));
   const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -179,20 +224,32 @@ function isValidDate(date) {
   }
 }
 
-// Fonction de validation du nombre de concours
+/**
+ * The function checks if a given quantity is valid based on a regular expression pattern.
+ * @param quantity - The parameter "quantity" is a value that represents the quantity of a certain item
+ * or product. It is used as an input for the function "isValidQuantity" which checks if the quantity
+ * is valid or not based on a regular expression pattern.
+ * @returns The function `isValidQuantity` is returning a boolean value. It will return `true` if the
+ * `quantity` parameter matches the regular expression pattern `/^\d{1,2}$/`, which checks if the
+ * quantity is a string of 1 or 2 digits. It will return `false` otherwise.
+ */
 function isValidQuantity(quantity) {
   const quantityPattern = /^\d{1,2}$/;
   return quantityPattern.test(quantity);
 }
 
-// fonction message remerciement
-function overlay() {
-  const modalBodyClasses = modalBody.classList;
-  if (modalBodyClasses.contains("modal-body")) {
-    modalBodyClasses.add("hidden-form");
-    successModal.classList.remove("hidden-form");
-  } else {
-    modalBodyClasses.remove("hidden-form");
-    successModal.classList.add("hidden-form");
-  }
-}
+/**
+ * The function toggles the visibility of a modal body and a success modal.
+ */
+// function overlay() {
+//   const modalBodyClasses = modalBody.classList;
+//   if (modalBodyClasses.contains("modal-body")) {
+    // modalBodyClasses.add("hidden-form");
+  //   modalBody.classList.add("hidden-form");
+  //   successModal.classList.remove("hidden-form");
+  // } else {
+    // modalBodyClasses.remove("hidden-form");
+  //   modalBody.classList.remove("hidden-form");
+  //   successModal.classList.add("hidden-form");
+  // }
+// }
